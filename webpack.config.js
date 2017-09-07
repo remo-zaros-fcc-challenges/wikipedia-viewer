@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge')
 
 const parts = require('./webpack.parts')
@@ -25,10 +26,12 @@ const commonConfig = merge([
         title: 'Wikipedia Viewer',
         template: '!!ejs-compiled-loader!' + PATHS.app + '/index.ejs',
       }),
+      new CopyWebpackPlugin([
+        { from: 'app/assets', to: 'assets' },
+      ])
     ],
   },
   parts.babel({exclude: /node_modules/}),
-  //parts.html({}),
 ])
 
 const productionConfig = merge([
