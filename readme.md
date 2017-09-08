@@ -1,5 +1,5 @@
-Use the Twitchtv JSON API
--------------------------
+wikipedia viewer
+----------------
 
 A Challenge for the FreeCodeCamp front-end certificate. A static page that makes calls to the Wikipedia API. Enter a search query to show some search results on the page.   
        
