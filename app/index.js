@@ -1,4 +1,5 @@
 import './main.css'
+import {AutoCompleteItem} from './components/AutoCompleteItem'
 
 const inputForm = document.getElementById('input_form')
 const letsGoArrow = document.getElementById('lets-go')
@@ -18,33 +19,26 @@ function goToWikipedia (e) {
   }
 }
 
+function autoCompleteOnClickHandler (e) {
+  e.preventDefault()
+  const itemHeader = e.target.parentElement.parentElement.dataset.word
+  const textInput = document.getElementById('input_form')
+  headerElm.scrollTop = 0
+  textInput.value = itemHeader
+  textInput.focus()
+  textInput.setSelectionRange(textInput.value.length, textInput.value.length)
+
+  clearAutoCompleteItems()
+  getCompleteItems(itemHeader)
+}
+
 function getCompleteItems (query) {
   fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${query}&limit=20`)
     .then(resp => resp.json())
     .then(data => data[1].forEach((x, i) => {
-      let el = document.createElement('div')
-      el.setAttribute('class', 'autocomplete-item')
-      el.setAttribute('data-word', x)
-      const html = `
-        <div class="autocomplete-item__container">
-          <h2 class="autocomplete-item__header">${x}</h2>
-          <p class="autocomplete-item__desc">${data[2][i]}</p>
-        </div>
-        <a class="autocomplete-item__shortcut" href="${data[3][i]}">Go to the Wikipage»</a>`
-
-      el.innerHTML = html
+      const el = AutoCompleteItem(data[1][i], data[2][i], data[3][i])
       document.getElementById('autocomplete').append(el)
-      el.firstElementChild.onclick = e => {
-        e.preventDefault()
-        var textInput = document.getElementById('input_form')
-        headerElm.scrollTop = 0
-        textInput.value = x
-        textInput.focus()
-        textInput.setSelectionRange(textInput.value.length, textInput.value.length)
-
-        clearAutoCompleteItems()
-        getCompleteItems(x)
-      }
+      el.firstElementChild.onclick = autoCompleteOnClickHandler
     })
   )
 }
@@ -64,6 +58,7 @@ function fetchResults (e) {
 letsGoArrow.onclick = e => {
   window.open('https://en.wikipedia.org/wiki/' + inputForm.value, '_self')
 }
+
 inputForm.oninput = fetchResults
 inputForm.onkeydown = goToWikipedia
 inputForm.onfocus = () => {
@@ -72,6 +67,7 @@ inputForm.onfocus = () => {
     inputForm.value = ''
   }
 }
+
 inputForm.onblur = e => inputContainer.classList.remove('isFocused')
 inputForm.value = 'search Wikipedia…'
 letsGoArrow.style.visibility = 'hidden'
