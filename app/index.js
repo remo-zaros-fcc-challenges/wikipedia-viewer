@@ -19,7 +19,7 @@ function goToWikipedia (e) {
 }
 
 function getCompleteItems (query) {
-  fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${query}&limit=20&titles=File:Test.jpg&prop=imageinfo`)
+  fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${query}&limit=20`)
     .then(resp => resp.json())
     .then(data => data[1].forEach((x, i) => {
       let el = document.createElement('div')
