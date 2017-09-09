@@ -21,7 +21,7 @@ function goToWikipedia (e) {
 
 function autoCompleteOnClickHandler (e) {
   e.preventDefault()
-  const itemHeader = e.target.parentElement.parentElement.dataset.word
+  const itemHeader = e.target.closest('.autocomplete-item').dataset.word
   const textInput = document.getElementById('input_form')
   headerElm.scrollTop = 0
   textInput.value = itemHeader
@@ -55,6 +55,7 @@ function fetchResults (e) {
     letsGoArrow.style.visibility = 'visible'
   }
 }
+
 letsGoArrow.onclick = e => {
   window.open('https://en.wikipedia.org/wiki/' + inputForm.value, '_self')
 }

@@ -8,7 +8,7 @@ export function AutoCompleteItem (header, desc, url) {
       <h2 class="autocomplete-item__header">${header}</h2>
       <p class="autocomplete-item__desc">${desc}</p>
     </div>
-    <a class="autocomplete-item__shortcut" href="${url}">Go to the Wikipage»</a>`
+    <a class="autocomplete-item__shortcut" href="${url}">Read the ${header} wiki page»</a>`
 
   el.innerHTML = html
   return el
