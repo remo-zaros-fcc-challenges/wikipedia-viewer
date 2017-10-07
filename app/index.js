@@ -1,6 +1,7 @@
 import './main.css'
 import {AutoCompleteItem} from './components/AutoCompleteItem'
 
+const body = document.querySelector(".page")
 const inputForm = document.getElementById('input_form')
 const letsGoArrow = document.getElementById('lets-go')
 const inputContainer = document.querySelector('.input-form__container')
@@ -51,8 +52,10 @@ function fetchResults (e) {
   }
   if (query === '' || query === 'search Wikipedia…') {
     letsGoArrow.style.visibility = 'hidden'
+    body.classList.remove('hasContent')
   } else {
     letsGoArrow.style.visibility = 'visible'
+    body.classList.add('hasContent')
   }
 }
 
